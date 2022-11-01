@@ -22,7 +22,7 @@ public class StudentService {
 	private StudentRepository studentRepository;
 
 	@Autowired
-	private StudentCustomRepository customRepository;
+	private StudentCustomRepository customRepository;//Repositório criado por mim, para realizar os cálculos necessários
 
 	public Student findStudent(Student student) {
 		return customRepository.findStudent(student);

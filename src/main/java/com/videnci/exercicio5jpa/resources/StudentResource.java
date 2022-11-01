@@ -24,32 +24,32 @@ public class StudentResource {
 	@Autowired
 	private StudentService studentService;
 
-	@GetMapping(value = "/find/{id}")
+	@GetMapping(value = "/find/student/{id}")
 	public ResponseEntity<Student> findStudent(@PathVariable Long id) {
 		return ResponseEntity.ok(studentService.findStudent(studentService.findById(id)));
 	}
 
-	@GetMapping(value = "/find/all")
+	@GetMapping(value = "/find/student/all")
 	public ResponseEntity<List<Student>> findAll() {
 		return ResponseEntity.ok(studentService.findAll());
 	}
 
-	@PostMapping(value = "/student")
+	@PostMapping(value = "/save/student")
 	public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
 		student = studentService.saveStudent(student);
 		studentService.saveStudent(student);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/student/{id}").buildAndExpand(student.getId())
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save/student/{id}").buildAndExpand(student.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(student);
 	}
 
-	@DeleteMapping(value = "/delete/{id}")
+	@DeleteMapping(value = "/delete/student/{id}")
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudent(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping(value = "/updated/{id}")
+	@PutMapping(value = "/updated/student/{id}")
 	public ResponseEntity<Student> updatedStudent(@PathVariable Long id, @RequestBody Student student) {
 		student = studentService.updateStudent(id, student);
 		return ResponseEntity.ok(student);
