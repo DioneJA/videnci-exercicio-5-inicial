@@ -1,6 +1,5 @@
 package com.videnci.exercicio5jpa.repositories;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.List;
 
