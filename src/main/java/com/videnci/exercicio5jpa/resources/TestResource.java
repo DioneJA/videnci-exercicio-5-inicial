@@ -19,37 +19,37 @@ import com.videnci.exercicio5jpa.entities.Test;
 import com.videnci.exercicio5jpa.services.TestService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/test")
 public class TestResource {
 	@Autowired
 	TestService testService;
 
-	@GetMapping(value = "/find/test/all")
+	@GetMapping
 	public ResponseEntity<List<Test>> findAll() {
 		return ResponseEntity.ok(testService.findAll());
 	}
 	
-	@GetMapping(value="/find/test/{id}")
+	@GetMapping(value="/{id}")
 	public ResponseEntity<Test> findById(@PathVariable Long id){
 		return ResponseEntity.ok(testService.findById(id));
 	}
 	
-	@PostMapping(value = "/save/test")
+	@PostMapping
 	public ResponseEntity<Test> saveTest(@RequestBody Test test) {
 		test = testService.saveTest(test);
 		testService.saveTest(test);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save/test/{id}").buildAndExpand(test.getId())
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(test.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(test);
 	}
 
-	@DeleteMapping(value = "/delete/test/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteTest(@PathVariable Long id) {
 		testService.deleteTest(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping(value = "/updated/test/{id}")
+	@PutMapping(value = "/{id}")
 	public ResponseEntity<Test> updatedTest(@PathVariable Long id, @RequestBody Test test) {
 		test = testService.updateTest(id, test);
 		return ResponseEntity.ok(test);

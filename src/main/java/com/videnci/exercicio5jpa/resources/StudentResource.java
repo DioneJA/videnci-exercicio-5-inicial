@@ -19,37 +19,37 @@ import com.videnci.exercicio5jpa.entities.Student;
 import com.videnci.exercicio5jpa.services.StudentService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/student")
 public class StudentResource {
 	@Autowired
 	private StudentService studentService;
 
-	@GetMapping(value = "/find/student/{id}")
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Student> findStudent(@PathVariable Long id) {
 		return ResponseEntity.ok(studentService.findStudent(studentService.findById(id)));
 	}
 
-	@GetMapping(value = "/find/student/all")
+	@GetMapping
 	public ResponseEntity<List<Student>> findAll() {
 		return ResponseEntity.ok(studentService.findAll());
 	}
 
-	@PostMapping(value = "/save/student")
+	@PostMapping
 	public ResponseEntity<Student> saveStudent(@RequestBody Student student) {
 		student = studentService.saveStudent(student);
 		studentService.saveStudent(student);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/save/student/{id}").buildAndExpand(student.getId())
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(student.getId())
 				.toUri();
 		return ResponseEntity.created(uri).body(student);
 	}
 
-	@DeleteMapping(value = "/delete/student/{id}")
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Void> deleteStudent(@PathVariable Long id) {
 		studentService.deleteStudent(id);
 		return ResponseEntity.noContent().build();
 	}
 
-	@PutMapping(value = "/updated/student/{id}")
+	@PutMapping(value = "/{id}")
 	public ResponseEntity<Student> updatedStudent(@PathVariable Long id, @RequestBody Student student) {
 		student = studentService.updateStudent(id, student);
 		return ResponseEntity.ok(student);

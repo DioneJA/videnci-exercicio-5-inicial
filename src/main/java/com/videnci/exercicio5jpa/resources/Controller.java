@@ -9,11 +9,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletResponse;
  
 @RestController
+@RequestMapping("/error")
+
 public class Controller implements ErrorController {
- 
-    // …
- 
-    @RequestMapping("/error")
+
     public ModelAndView handleError(HttpServletResponse response)
     {
         ModelAndView modelAndView = new ModelAndView();
