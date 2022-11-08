@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="tb_student")
 public class Student implements Serializable{
@@ -21,6 +23,8 @@ public class Student implements Serializable{
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
+	@JsonIgnore
 	@OneToMany(mappedBy = "student")
 	private List<Test> tests = new ArrayList<>();
 	

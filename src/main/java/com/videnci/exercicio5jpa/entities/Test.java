@@ -11,8 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity
 @Table(name="tb_test")
 public class Test implements Serializable{
@@ -23,7 +21,6 @@ public class Test implements Serializable{
 	@Column(name="test_note")
 	private Double value;
 	
-	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="id_student")
 	private Student student;
