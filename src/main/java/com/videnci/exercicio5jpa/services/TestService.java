@@ -10,6 +10,7 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.videnci.exercicio5jpa.entities.Test;
+import com.videnci.exercicio5jpa.repositories.TestCustomRepository;
 import com.videnci.exercicio5jpa.repositories.TestRepository;
 import com.videnci.exercicio5jpa.services.exceptions.DataBaseException;
 import com.videnci.exercicio5jpa.services.exceptions.ResourceNotFoundException;
@@ -19,8 +20,15 @@ public class TestService {
 	@Autowired
 	private TestRepository testRepository;
 
+	@Autowired
+	private TestCustomRepository customRepository;
+
 	public List<Test> findAll() {
 		return testRepository.findAll();
+	}
+
+	public List<Test> findAllByStudentId(Long id) {
+		return customRepository.findAllByStudentId(id);
 	}
 
 	public Test findById(Long id) {

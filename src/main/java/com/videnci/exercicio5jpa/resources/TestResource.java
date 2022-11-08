@@ -28,18 +28,22 @@ public class TestResource {
 	public ResponseEntity<List<Test>> findAll() {
 		return ResponseEntity.ok(testService.findAll());
 	}
-	
-	@GetMapping(value="/{id}")
-	public ResponseEntity<Test> findById(@PathVariable Long id){
+
+	@GetMapping(value = "/{id}")
+	public ResponseEntity<Test> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(testService.findById(id));
 	}
-	
+
+	@GetMapping(value = "/student/{id}")
+	public ResponseEntity<List<Test>> findAllByStudentId(@PathVariable Long id) {
+		return ResponseEntity.ok(testService.findAllByStudentId(id));
+	}
+
 	@PostMapping
 	public ResponseEntity<Test> saveTest(@RequestBody Test test) {
 		test = testService.saveTest(test);
 		testService.saveTest(test);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(test.getId())
-				.toUri();
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(test.getId()).toUri();
 		return ResponseEntity.created(uri).body(test);
 	}
 
