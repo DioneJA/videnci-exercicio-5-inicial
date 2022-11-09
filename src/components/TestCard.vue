@@ -18,44 +18,18 @@
                   <strong>Nota: </strong>{{ x.value }}
                 </div>
               </div>
-              <div class="q-pa-md q-ml-sm">
-                <q-btn
-                  round
-                  color="red"
-                  icon="delete"
-                  @click="(confirm = true), (testId = x.id)"
-                />
-              </div>
+              <btn-delete-test :id="x.id"></btn-delete-test>
             </q-card-section>
           </q-card>
-          <!-- Componente de dialogo confirmar precisa de props id -->
-          <q-dialog v-model="confirm" persistent>
-            <q-card>
-              <q-card-section class="row items-center">
-                <q-avatar icon="warning" color="orange" text-color="white" />
-                <span class="q-ml-sm"
-                  ><strong>Você tem certeza que deseja excluir a prova?</strong></span
-                >
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn flat label="Cancelar" color="primary" v-close-popup />
-                <q-btn
-                  flat
-                  label="Confirmar"
-                  color="primary"
-                  v-close-popup
-                  @click="deleteTest(testId)"
-                />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
         </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import BtnDeleteTest from '../components/BtnDeleteTest.vue'
 export default {
+  components: {
+    BtnDeleteTest
+  },
   props: {
     id: {
       type: String,
@@ -64,13 +38,7 @@ export default {
   },
   data () {
     return {
-      tests: [],
-      testId: 0
-    }
-  },
-  setup () {
-    return {
-      confirm: ref(false)
+      tests: []
     }
   },
   created () {
@@ -86,19 +54,6 @@ export default {
         .catch((err) => {
           console.log(err)
         })
-    },
-    deleteTest (id) {
-      this.$axios
-        .delete('/test/' + id)
-        .then(() => {
-          this.reload()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    reload () {
-      window.location.reload(true)
     }
   }
 }

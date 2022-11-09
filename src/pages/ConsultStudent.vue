@@ -1,16 +1,7 @@
 <template>
   <q-page>
     <div class="q-pa-md items-start q-gutter-md flex flex-center">
-      <div class="q-pa-md q-gutter-sm">
-        <q-btn round color="blue-6" icon="list" to="/">
-          <q-tooltip
-            :offset="[10, 10]"
-            transition-show="scale"
-            transition-hide="scale"
-            >Voltar para página de cadastro de alunos</q-tooltip
-          >
-        </q-btn>
-       </div>
+      <btn-home></btn-home>
       <student-consult-card :id="id"></student-consult-card>
     </div>
   </q-page>
@@ -18,9 +9,10 @@
 
 <script>
 import StudentConsultCard from '../components/StudentConsultCard.vue'
+import BtnHome from '../components/BtnHome.vue'
 export default {
   components: {
-    StudentConsultCard
+    StudentConsultCard, BtnHome
   },
   data () {
     return {
