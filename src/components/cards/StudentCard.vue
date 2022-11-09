@@ -20,8 +20,8 @@
 </template>
 
 <script>
-import BtnConsultStudent from '../components/BtnConsultStudent.vue'
-import BtnDeleteStudent from '../components/BtnDeleteStudent.vue'
+import BtnConsultStudent from '../buttons/BtnConsultStudent.vue'
+import BtnDeleteStudent from '../buttons/BtnDeleteStudent.vue'
 export default {
   components: {
     BtnConsultStudent, BtnDeleteStudent

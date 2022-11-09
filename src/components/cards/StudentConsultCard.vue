@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import BtnAddTest from '../components/BtnAddTest.vue'
-import TestCard from '../components/TestCard.vue'
+import BtnAddTest from '../buttons/BtnAddTest.vue'
+import TestCard from '../cards/TestCard.vue'
 export default {
   components: {
     BtnAddTest, TestCard

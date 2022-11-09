@@ -8,8 +8,8 @@
 </template>
 
 <script>
-import StudentConsultCard from '../components/StudentConsultCard.vue'
-import BtnHome from '../components/BtnHome.vue'
+import StudentConsultCard from '../components/cards/StudentConsultCard.vue'
+import BtnHome from '../components/buttons/BtnHome.vue'
 export default {
   components: {
     StudentConsultCard, BtnHome

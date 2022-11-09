@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import BtnDeleteTest from '../components/BtnDeleteTest.vue'
+import BtnDeleteTest from '../buttons/BtnDeleteTest.vue'
 export default {
   components: {
     BtnDeleteTest

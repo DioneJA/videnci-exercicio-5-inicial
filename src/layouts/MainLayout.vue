@@ -47,17 +47,17 @@
 </template>
 
 <script>
-import EssentialLink from 'components/EssentialLink.vue'
+import EssentialLink from 'src/components/EssentialLink.vue'
 
 const linksData = [
   {
-    title: 'Cadastro de aluno',
-    icon: 'school',
+    title: 'Home',
+    icon: 'home',
     link: '/'
   },
   {
     title: 'Ver maior nota',
-    icon: '>',
+    icon: 'bolt',
     link: '/*'
   }
 ]

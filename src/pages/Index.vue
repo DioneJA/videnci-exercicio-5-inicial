@@ -6,9 +6,8 @@
 </template>
 
 <script>
-
-import BtnAddStudent from '../components/BtnAddStudent.vue'
-import StudentCard from '../components/StudentCard.vue'
+import BtnAddStudent from '../components/buttons/BtnAddStudent.vue'
+import StudentCard from '../components/cards/StudentCard.vue'
 export default {
   components: {
     BtnAddStudent, StudentCard
