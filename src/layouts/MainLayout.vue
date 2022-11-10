@@ -1,7 +1,7 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
+  <q-layout view="lHh Lpr lFf" class="text-grey-12">
     <q-header elevated>
-      <q-toolbar>
+      <q-toolbar class="bg-grey-8">
         <q-btn
           flat
           dense
@@ -22,14 +22,14 @@
       v-model="leftDrawerOpen"
       show-if
       bordered
-      content-class="bg-grey-1"
+      content-class="bg-grey-9"
     >
       <q-list>
         <q-item-label
           header
-          class="text-grey-8"
+          class="text-grey-12 "
         >
-          Opções
+         Opções
         </q-item-label>
         <EssentialLink
           v-for="link in essentialLinks"
@@ -58,7 +58,7 @@ const linksData = [
   {
     title: 'Ver maior nota',
     icon: 'bolt',
-    link: '/*'
+    link: '/highest'
   }
 ]
 
