@@ -9,7 +9,6 @@ import javax.persistence.EntityManager;
 import org.springframework.stereotype.Repository;
 
 import com.videnci.exercicio5jpa.entities.Test;
-import com.videnci.exercicio5jpa.services.exceptions.DataBaseException;
 
 @Repository
 public class TestCustomRepository {
@@ -34,6 +33,17 @@ public class TestCustomRepository {
 				tests.add(new Test(assistentId, assistentValue, null));
 			}
 			return tests;
+		}catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	public Double highestScore() {
+		try {
+			String query = "SELECT MAX(test_note) FROM tb_test";
+			var q = entityManager.createNativeQuery(query);
+			return (Double) q.getSingleResult();
 		}catch (Exception e) {
 			System.out.println(e.getMessage());
 			return null;

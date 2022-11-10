@@ -33,6 +33,11 @@ public class TestResource {
 	public ResponseEntity<Test> findById(@PathVariable Long id) {
 		return ResponseEntity.ok(testService.findById(id));
 	}
+	
+	@GetMapping(value = "/highest")
+	public ResponseEntity<Double> highestScore(){
+		return ResponseEntity.ok(testService.highestScore());
+	}
 
 	@GetMapping(value = "/student/{id}")
 	public ResponseEntity<List<Test>> findAllByStudentId(@PathVariable Long id) {

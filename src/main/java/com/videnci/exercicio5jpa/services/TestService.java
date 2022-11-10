@@ -35,6 +35,10 @@ public class TestService {
 		return testRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 
+	public Double highestScore() {
+		return customRepository.highestScore();
+	}
+
 	public Test saveTest(Test test) {
 		return testRepository.save(test);
 	}
