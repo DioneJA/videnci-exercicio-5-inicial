@@ -4,7 +4,6 @@
             class="my-card bg-blue-white-10 text-black"
             v-for="(x, index) in tests"
             :key="x.id"
-            style="width:44%"
           >
             <q-card-section class="row flex flex-center" v-if="tests.length>0" >
               <div>
@@ -26,35 +25,24 @@
 
 <script>
 import BtnDeleteTest from '../buttons/BtnDeleteTest.vue'
+import { mapActions, mapState } from 'vuex'
 export default {
   components: {
     BtnDeleteTest
   },
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
   data () {
     return {
-      tests: []
+      id: this.$route.params.id
     }
+  },
+  computed: {
+    ...mapState(['tests'])
   },
   created () {
-    this.consultTestsOfStudent()
+    this.fetchTests(this.id)
   },
   methods: {
-    consultTestsOfStudent () {
-      this.$axios
-        .get('/test/student/' + this.id)
-        .then((resp) => {
-          this.tests = resp.data
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
+    ...mapActions(['fetchTests'])
   }
 }
 </script>

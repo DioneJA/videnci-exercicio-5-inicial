@@ -5,7 +5,7 @@
       round
       color="red"
       icon="delete"
-      @click="(confirm = true)">
+      @click="openConfirmDialog(confirm)">
         <q-tooltip
           :offset="[10, 10]"
           transition-show="scale"
@@ -14,57 +14,33 @@
         </q-tooltip>
         </q-btn>
       </div>
-         <!-- Componente de dialogo confirmar -->
-        <q-dialog v-model="confirm" persistent>
-            <q-card>
-              <q-card-section class="row items-center">
-                <q-avatar icon="warning" color="orange" text-color="white" />
-                <span class="q-ml-sm"
-                  ><strong>Você tem certeza que deseja excluir a prova?</strong></span>
-              </q-card-section>
-
-              <q-card-actions align="right">
-                <q-btn flat label="Cancelar" color="primary" v-close-popup />
-                <q-btn
-                  flat
-                  label="Confirmar"
-                  color="primary"
-                  v-close-popup
-                  @click="deleteTest(id)"
-                />
-              </q-card-actions>
-            </q-card>
-          </q-dialog>
+      <confirm-dialog></confirm-dialog>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
+import { mapActions } from 'vuex'
+import ConfirmDialog from '../dialogs/ConfirmTestDialog.vue'
 export default {
+  components: {
+    ConfirmDialog
+  },
   props: {
     id: {
       required: true
     }
   },
-  setup () {
+  data () {
     return {
-      confirm: ref(false)
+      confirm: {
+        boolean: true,
+        msg: 'Você tem certeza que deseja excluir a prova?',
+        id: this.id
+      }
     }
   },
   methods: {
-    deleteTest (id) {
-      this.$axios
-        .delete('/test/' + id)
-        .then(() => {
-          this.reload()
-        })
-        .catch((error) => {
-          console.log(error)
-        })
-    },
-    reload () {
-      window.location.reload(true)
-    }
+    ...mapActions(['openConfirmDialog'])
   }
 }
 </script>

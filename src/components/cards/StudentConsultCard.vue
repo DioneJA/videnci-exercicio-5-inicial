@@ -4,7 +4,7 @@
         style="max-width: 650px"
       >
         <q-card-section>
-          <div class="text-h6"><strong>ID: </strong>{{ student.id }}</div>
+          <div class="text-h6"><strong>ID: </strong>{{ student.id || 0}}</div>
           <div class="text-subtitle1">
             <strong>Nome: </strong>{{ student.name }}
           </div>
@@ -23,52 +23,26 @@
               >{{ student.amountTests }}
             </div>
           </div>
-          <div class="testFalse" v-else>
-            <div class="text-subtitle1">
-              <strong>O Aluno não possui nenhuma prova cadastrada!</strong>
-            </div>
-          </div>
-          <test-card :id="id"></test-card>
+         <empty-card v-else>
+          O aluno não possui nenhuma prova cadastrada!
+         </empty-card>
+          <test-card></test-card>
         </q-card-section>
-        <btn-add-test :student="student"/>
+        <btn-add-test/>
       </q-card>
 </template>
 
 <script>
 import BtnAddTest from '../buttons/BtnAddTest.vue'
 import TestCard from '../cards/TestCard.vue'
+import EmptyCard from './EmptyCard.vue'
+import { mapState } from 'vuex'
 export default {
   components: {
-    BtnAddTest, TestCard
+    BtnAddTest, TestCard, EmptyCard
   },
-  props: {
-    id: {
-      type: String,
-      required: true
-    }
-  },
-  data () {
-    return {
-      student: {
-        type: Object,
-        required: true
-      }
-    }
-  },
-  created () {
-    this.consultStudent()
-  },
-  methods: {
-    consultStudent () {
-      this.$axios
-        .get('/student/' + this.id)
-        .then((resp) => {
-          this.student = resp.data
-        })
-        .catch((err) => {
-          console.log(err)
-        })
-    }
+  computed: {
+    ...mapState(['student'])
   }
 }
 </script>

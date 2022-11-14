@@ -1,5 +1,5 @@
 <template>
-   <div class="q-pa-md row items-start q-gutter-md flex flex-center">
+   <div class="q-pa-md row items-start q-gutter-md flex flex-center" >
       <q-card
         class="my-card bg-blue-grey-10 text-white"
         v-for="(p, index) in students"
@@ -22,15 +22,16 @@
 <script>
 import BtnConsultStudent from '../buttons/BtnConsultStudent.vue'
 import BtnDeleteStudent from '../buttons/BtnDeleteStudent.vue'
+import { mapState, mapActions } from 'vuex'
 export default {
   components: {
     BtnConsultStudent, BtnDeleteStudent
   },
-  props: {
-    students: {
-      type: Array,
-      required: true
-    }
+  computed: {
+    ...mapState(['students'])
+  },
+  methods: {
+    ...mapActions(['setStudentID'])
   }
 }
 </script>
