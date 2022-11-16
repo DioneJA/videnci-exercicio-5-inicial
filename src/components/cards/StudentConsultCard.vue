@@ -8,7 +8,7 @@
           <div class="text-subtitle1">
             <strong>Nome: </strong>{{ student.name }}
           </div>
-          <div class="testTrue" v-if="student.amountTests > 0">
+          <div v-if="student.amountTests > 0">
             <div class="text-subtitle1">
               <strong>Média: </strong>{{ student.average.toFixed(2) }}
             </div>
@@ -23,7 +23,7 @@
               >{{ student.amountTests }}
             </div>
           </div>
-         <empty-card v-else>
+          <empty-card v-else>
           O aluno não possui nenhuma prova cadastrada!
          </empty-card>
           <test-card></test-card>
@@ -36,17 +36,33 @@
 import BtnAddTest from '../buttons/BtnAddTest.vue'
 import TestCard from '../cards/TestCard.vue'
 import EmptyCard from './EmptyCard.vue'
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 export default {
+  data () {
+    return {
+      id: this.$route.params.id
+    }
+  },
   components: {
     BtnAddTest, TestCard, EmptyCard
   },
   computed: {
-    ...mapState(['student'])
+    ...mapState(['student', 'tests'])
+  },
+  mounted () {
+    this.consultStudent(this.id)
+  },
+  methods: {
+    ...mapActions(['consultStudent'])
+  },
+  watch: {
+    tests () {
+      this.consultStudent(this.id)
+    }
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style>
 
 </style>

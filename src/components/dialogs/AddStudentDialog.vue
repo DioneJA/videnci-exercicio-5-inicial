@@ -12,18 +12,18 @@
               dense
               v-model="student.name"
               autofocus
-              @keyup.enter="postStudent(student)"
+              @keyup.enter="postStudent(student),closeAddDialog(), student.name=''"
               required
               :rules="[ val => val.length >= 3 || null || 'Insira pelo menos 3 caracteres' ]"
             />
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel" @click="closeAddDialog()"/>
+            <q-btn flat label="Cancel" @click="closeAddDialog(), student.name=''"/>
             <q-btn
               flat
               label="Adicionar aluno"
-              @click="postStudent(student), closeAddDialog()"
+              @click="postStudent(student), closeAddDialog(), student.name=''"
             />
           </q-card-actions>
         </q-card>

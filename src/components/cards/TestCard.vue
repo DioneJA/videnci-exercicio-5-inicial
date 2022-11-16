@@ -5,7 +5,7 @@
             v-for="(x, index) in tests"
             :key="x.id"
           >
-            <q-card-section class="row flex flex-center" v-if="tests.length>0" >
+            <q-card-section class="row flex flex-center">
               <div>
                 <div class="text-h6">
                   <strong>Prova: </strong>{{ index + 1 }}

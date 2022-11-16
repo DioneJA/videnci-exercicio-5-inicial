@@ -12,7 +12,7 @@
               dense
               v-model="test.value"
               autofocus
-              @keyup.enter="postTest(test), closeAddDialog()"
+              @keyup.enter="postTest(test), closeAddDialog(), test.value=''"
               required
               :rules="[ val => val >= 0 && val<=10 || 'Insira uma nota válida']"
               type="number"
@@ -21,7 +21,7 @@
           </q-card-section>
 
           <q-card-actions align="right" class="text-primary">
-            <q-btn flat label="Cancel"  @click="closeAddDialog()"/>
+            <q-btn flat label="Cancel"  @click="closeAddDialog(), test.value=''"/>
             <q-btn
               flat
               label="Adicionar prova"

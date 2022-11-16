@@ -14,7 +14,7 @@
             flat
             label="Confirmar"
             color="primary"
-            @click="deleteTest(id) , closeConfirmDialog()"
+            @click="deleteTest(id), closeConfirmDialog()"
           />
         </q-card-actions>
       </q-card>

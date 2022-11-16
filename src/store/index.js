@@ -3,17 +3,9 @@ import Vue, { ref } from 'vue'
 import Vuex from 'vuex'
 import StudentService from '../services/StudentService'
 import TestService from '../services/TestService'
+import { Notify } from 'quasar'
 
 Vue.use(Vuex)
-
-/*
- * If not building with SSR mode, you can
- * directly export the Store instantiation;
- *
- * The function below can be async too; either use
- * async/await or return a Promise which resolves
- * with the Store instance.
- */
 
 export default function (/* { ssrContext } */) {
   const Store = new Vuex.Store({
@@ -22,31 +14,58 @@ export default function (/* { ssrContext } */) {
       student: {},
       tests: [{}],
       highestScore: '',
+      id: '',
       confirm: ref(false),
       dialog: ref(false),
       prompt: ref(false),
-      message: '',
-      id: ''
-    },
-    getters: {
+      message: ''
     },
     mutations: {
+      /* ------------------------ Students ------------------------ */
       FETCH_STUDENTS(state, payload) {
         state.students = payload
       },
-      DELETE_STUDENT(state) {
+      DELETE_STUDENT(state, payload) {
+        const result = state.students.find(obj => {
+          return obj.id === payload
+        })
+        state.students.splice(state.students.indexOf(result), 1)
+
+        Notify.create({
+          type: 'positive',
+          message: 'Aluno excluído com sucesso!'
+        })
       },
       SAVE_STUDENT(state, payload) {
+        state.students.push(payload)
+        Notify.create({
+          type: 'positive',
+          message: 'Aluno adicionado com sucesso!'
+        })
       },
       CONSULT_STUDENT(state, payload) {
         state.student = payload
       },
+      /* ------------------------ Tests ------------------------ */
       FETCH_TESTS(state, payload) {
         state.tests = payload
       },
-      DELETE_TEST(state) {
+      DELETE_TEST(state, payload) {
+        const result = state.tests.find(obj => {
+          return obj.id === payload
+        })
+        state.tests.splice(state.tests.indexOf(result), 1)
+        Notify.create({
+          type: 'positive',
+          message: 'Prova excluída com sucesso!'
+        })
       },
-      POST_TEST(state) {
+      POST_TEST(state, payload) {
+        state.tests.push(payload)
+        Notify.create({
+          type: 'positive',
+          message: 'Prova adicionada com sucesso!'
+        })
       },
       GET_HIGHEST_SCORE(state, payload) {
         state.highestScore = payload
@@ -54,6 +73,7 @@ export default function (/* { ssrContext } */) {
       SET_ID(state, payload) {
         state.id = payload
       },
+      /* ------------------------ Dialogs ------------------------ */
       OPEN_CONFIRM_DIALOG(state, payload) {
         state.confirm = payload.boolean
         state.message = payload.msg
@@ -68,15 +88,15 @@ export default function (/* { ssrContext } */) {
       CLOSE_ERROR_DIALOG(state, payload) {
         state.dialog = payload
       },
-      OPEN_ADD_DIALOG(state, payload) {
+      OPEN_ADD_DIALOG(state) {
         state.prompt = true
-        state.student = payload
       },
       CLOSE_ADD_DIALOG(state) {
         state.prompt = false
       }
     },
     actions: {
+      /* ------------------------ Students ------------------------ */
       fetchStudents({ commit }) {
         StudentService.getStudents().then(response => {
           commit('FETCH_STUDENTS', response.data)
@@ -85,10 +105,8 @@ export default function (/* { ssrContext } */) {
         })
       },
       deleteStudent({ commit }, id) {
-        StudentService.deleteStudent(id).then(response => {
-          commit('DELETE_STUDENT')
-          window.location.reload(true)
-          console.log(response)
+        StudentService.deleteStudent(id).then(() => {
+          commit('DELETE_STUDENT', id)
         }).catch(error => {
           console.log('There was an error:', error.response)
           commit('OPEN_ERROR_DIALOG')
@@ -99,14 +117,14 @@ export default function (/* { ssrContext } */) {
           commit('CONSULT_STUDENT', response.data)
         }).catch(error => {
           console.log('There was an error:', error.response)
+          this.$router.push('/error')
         })
       },
       postStudent({ commit }, student) {
         if (student.name != null) {
           if (student.name.length >= 3) {
             StudentService.postStudent(student).then(response => {
-              commit('SAVE_STUDENT')
-              window.location.reload(true)
+              commit('SAVE_STUDENT', response.data)
             }).catch(error => {
               console.log('There was an error:', error.response)
               commit('OPEN_ERROR_DIALOG')
@@ -114,6 +132,7 @@ export default function (/* { ssrContext } */) {
           }
         }
       },
+      /* ------------------------ Tests ------------------------ */
       fetchTests({ commit }, id) {
         TestService.getTests(id).then(response => {
           commit('FETCH_TESTS', response.data)
@@ -123,8 +142,7 @@ export default function (/* { ssrContext } */) {
       },
       deleteTest({ commit }, id) {
         TestService.deleteTest(id).then(response => {
-          commit('DELETE_TEST')
-          window.location.reload(true)
+          commit('DELETE_TEST', id)
         }).catch(error => {
           console.log('There was an error:', error.response)
         })
@@ -132,8 +150,7 @@ export default function (/* { ssrContext } */) {
       postTest({ commit }, test) {
         if (test.value !== null && test.value >= 0 && test.value <= 10) {
           TestService.postTest(test).then(response => {
-            commit('POST_TEST')
-            window.location.reload(true)
+            commit('POST_TEST', response.data)
           }).catch(error => {
             console.log('There was an error:', error.response)
           })
@@ -146,6 +163,7 @@ export default function (/* { ssrContext } */) {
           console.log('There was an error:', error.response)
         })
       },
+      /* ------------------------ Dialogs ------------------------ */
       setStudentID({ commit }, id) {
         commit('SET_ID', id)
       },
@@ -158,8 +176,8 @@ export default function (/* { ssrContext } */) {
       closeErrorDialog({ commit }) {
         commit('CLOSE_ERROR_DIALOG', false)
       },
-      openAddDialog({ commit }, student) {
-        commit('OPEN_ADD_DIALOG', student)
+      openAddDialog({ commit }) {
+        commit('OPEN_ADD_DIALOG')
       },
       closeAddDialog({ commit }) {
         commit('CLOSE_ADD_DIALOG')
@@ -168,8 +186,6 @@ export default function (/* { ssrContext } */) {
     modules: {
     },
 
-    // enable strict mode (adds overhead!)
-    // for dev mode only
     strict: process.env.DEBUGGING
   })
   return Store
